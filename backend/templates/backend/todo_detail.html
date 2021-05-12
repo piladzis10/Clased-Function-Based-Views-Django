@@ -1,0 +1,26 @@
+{% extends "backend/base.html" %}
+
+{% block content %}
+
+<h1>Todo</h1>
+
+<strong>Status: </strong>{{ todo.is_done|yesno:"Done,Todo"}}
+
+<p>{{ todo.description }}</p>
+
+{% if not todo.is_done %}
+    <hr>
+
+    <form method="post" action="{% url 'todo_update' todo.id %}"> {% comment %} with function based views todo_detail {% endcomment %}
+        {% csrf_token %}
+
+        <input type="hidden" name="is_done" value="true"> {% comment %} only for class based view {% endcomment %}
+
+        <button>Mark as done</button>
+    </form>
+
+    <a href="{% url 'todo_list' %}">Back to list</a>
+
+{% endif %}
+
+{% endblock %}
